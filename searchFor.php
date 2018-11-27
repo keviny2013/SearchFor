@@ -231,9 +231,5 @@ function form($params)
 
 <?php
 
-
 echo '<h3>Search Through Folders - <a href="helpSearchFor.html" target="_blank">Help</a></h3>';
-
-
 echo $out; 
-	

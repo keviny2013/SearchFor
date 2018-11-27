@@ -248,7 +248,7 @@ class scanFolders {
 		{
 			$this->getFile($file);
 		}
-		else
+		elseif($filesize > 0)
 		{
 			$this->issues[] = 'File is too big: '. $file .' : '. $filesize .' bytes';
 			if(count($this->issues) > 99)

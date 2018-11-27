@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+	<head>
+		<title>Help for searchFor</title>
+	</head>
+<body>
+
+	<h3>HELP for searchFor</h3>
+<pre>
+
+WARNING:
+Passwords and other sensitive data may be visible if you don't exclude them.
+
+IN GENERAL:
+Files with size more than 1 million bytes will be skipped. Name of the file will be displayed.
+If number of matching files are 100, program will stop scanning folders and reading files.
+
+There are total 6 include and exclude boxes. Anything entered in any of these boxes will be used as filter to reduce the number of results.
+
+Searching in certain file types only:
+	If you want to search within php files only: write 'php$' in file name include box
+	If you want to search within php and javascript files only: write '(php|js)$' in file name include box.
+	
+Excluding certain file types:
+	If you write 'zip, jpg, pdf' in file name exclude box, any file name that includes zip or jpg or pdf will be excluded.
+	Or, in file name include box, you can write file types in preg_match pattern format like this: [^(zip|png|gif)]$
+	
+Include boxes: 
+	There are 3 include boxes: FILE Name Include, FILE Content Include, LINE Include.
+	Program, filters out (excludes) files (or lines) that DO NOT match the requested criteria in include boxes. 
+	Program uses PHP's preg_match to evaluate the requested criteria in include boxes. So, your input must be a pattern, a preg_match pattern. Case insensitive. Examples:
+	Pattern 1: js
+		If you write pattern 1 in file name include box, files that do not have 'js' ANYWHERE in the file name will be filtered out (excluded). Meaning 'ferJSing.txt', 'fering.js' will not be excluded. 'fering.txt' will be excluded.	
+	Pattern 2: js$
+		If you write pattern 2 in file name include box, files that do not have 'js' AT THE END of the file name will be filtered out (excluded). 'fering.js' will not be excluded but 'ferJSing.txt' will be excluded.
+Exclude boxes: 
+	There are 3 exclude boxes: FILE Name Exclude, FILE Content Exclude, LINE Exclude.
+	Program, filters out (excludes) files (or lines) that DO match the requested criteria in exclude boxes.
+	You can enter more than 1 criteria in exclude boxes. You must seperate each criteria with comma and space like: apple, banana, orange
+	Program will first separate each criteria.
+	Then, program will use PHP's stripos() function to compare criteria with file name, file content or line. stripos is case insensitive. Examples:
+	Criterias 1: js, jpg, zip
+		If you write Criterias 1 in file name exclude box, files like 'abc.JS', 'aJS.txt',  'abc.JPG', 'aJPG.txt',  'abc.ZIP', 'aZIP.txt' will be excluded.
+		What can you do if you don't want files like 'aZIP.txt', 'aJPG.txt', 'aJS.txt' to be excluded but only 'abc.JS', 'abc.JPG',  'abc.ZIP', to be excluded?
+		You can use include box for this purpose. For this purpose, right (PHP preg_match) pattern (in file name include box) would be: [^(js|jpg|zip)]$	
+	Criterias 2: defined, kevin
+		If you write Criterias 2 in file content exclude box, files that include 'defined', 'undefined', 'kevin', 'Kevin', 'kevins', 'mykevins' will be filtered out (excluded). 		
+	
+EACH LINE of FORM:	
+Start:
+	Relative path to start scanning.
+Sca:	
+	Maximum folders: 
+		Maximum numbers of folders to scan and loop. Leave blank if you want all folders.
+	Maximum files: 
+		Maximum numbers of files to read the content. Leave blank if you want all files.
+Filename: 
+	Filters the files by name. 
+File content: 
+	Filters the files by content. Only qualified files will be selected and will be displayed in the results.
+Line: 
+	Filters the lines by content. 
+	Only the qualified lines will be displayed. 
+	If you leave both Include and Exclude boxes of Line then you will see only the link to file.
+	If you click the link, you will see all lines and only the qualified lines will be highlighted.
+
+RESULTS:
+	Program runs by following the order of the form that you see on the screen:
+	1- START: Program goes to the starting path if exists.
+	2- SCAN: Program finds the subfolders and files.
+		Checks if maximum folders limit is reached. Checks if maximum files limit is reached.
+		The numbers of the folders that passes this check shows in the results as 'Folders:'.	
+	3- FILE name: Program applies include and exclude filters if exists.
+		The numbers of the files that passes these filters shows in the results as 'Files before reading'.
+	4- FILE Content: Program applies include and exclude filters if exists.
+		The numbers of the files that passes these filters shows in the results as 'Files with matching content'.
+	5- LINE: Program applies include and exclude filters if exists.
+
+</body>
